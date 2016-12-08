@@ -13,7 +13,7 @@ let entry = [];
 let jobIndex = 0;
 let pageIndex = 0;
 
-const interval = 5000;
+const interval = 3000;
 const ep = new EventProxy();
 
 for (var i = 0; i < 30; i++) {
@@ -22,7 +22,8 @@ for (var i = 0; i < 30; i++) {
 
 
 function runStart(page) {
-    console.log(`正在获取第${pageIndex}页数据`);
+    console.log(page);
+    console.log(`正在获取第${pageIndex + 1}页数据`);
     request
         .get(page)
         .end(function(err, res) {
@@ -43,9 +44,9 @@ function runStart(page) {
 
 
 
-function getJobs(entry) {
+function getJobs(entryList) {
 
-    ep.after('got_jobs', entry.length, function(list) {
+    ep.after('got_jobs', entryList.length, function(list) {
         // 在所有文件的异步执行结束后将被执行
         // 所有文件的内容都存在list数组中
         jobs.push(list);
@@ -73,6 +74,11 @@ function getJobInfo() {
 
     setTimeout(function() {
         console.log(` 🚀 正在获取第${jobIndex+1}条数据...\n`);
+        // ep.emit('got_jobs', {});
+        // if (jobIndex < entry.length - 1) {
+        //     jobIndex++;
+        //     getJobInfo();
+        // }
         request
             .get(entry[jobIndex])
             .end(function(err, res) {

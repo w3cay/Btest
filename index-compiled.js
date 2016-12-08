@@ -28,7 +28,7 @@ var entry = [];
 var jobIndex = 0;
 var pageIndex = 0;
 
-var interval = 5000;
+var interval = 3000;
 var ep = new _eventproxy2.default();
 
 for (var i = 0; i < 30; i++) {
@@ -36,7 +36,8 @@ for (var i = 0; i < 30; i++) {
 }
 
 function runStart(page) {
-    console.log('\u6B63\u5728\u83B7\u53D6\u7B2C' + pageIndex + '\u9875\u6570\u636E');
+    console.log(page);
+    console.log('\u6B63\u5728\u83B7\u53D6\u7B2C' + (pageIndex + 1) + '\u9875\u6570\u636E');
     _superagent2.default.get(page).end(function (err, res) {
         if (res.text) {
             (function () {
@@ -54,9 +55,9 @@ function runStart(page) {
     });
 }
 
-function getJobs(entry) {
+function getJobs(entryList) {
 
-    ep.after('got_jobs', entry.length, function (list) {
+    ep.after('got_jobs', entryList.length, function (list) {
         // 在所有文件的异步执行结束后将被执行
         // 所有文件的内容都存在list数组中
         jobs.push(list);
@@ -81,6 +82,11 @@ function getJobInfo() {
 
     setTimeout(function () {
         console.log(' \uD83D\uDE80 \u6B63\u5728\u83B7\u53D6\u7B2C' + (jobIndex + 1) + '\u6761\u6570\u636E...\n');
+        // ep.emit('got_jobs', {});
+        // if (jobIndex < entry.length - 1) {
+        //     jobIndex++;
+        //     getJobInfo();
+        // }
         _superagent2.default.get(entry[jobIndex]).end(function (err, res) {
             if (res.text) {
                 var $ = _cheerio2.default.load(res.text);

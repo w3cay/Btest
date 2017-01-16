@@ -4,10 +4,7 @@ import request from 'superagent';
 import EventProxy from 'eventproxy';
 import AV from 'leancloud-storage';
 import Jieba from 'nodejieba';
-// import {
-//     APP_ID,
-//     APP_KEY
-// } from './config';
+
 
 const APP_ID = 'DKznYjsoBovqVJ8fdTm3RwlB-gzGzoHsz';
 const APP_KEY = 'mTGcLoJJelK9SqLqfU5kSLi0';

@@ -3,10 +3,14 @@ import cheerio from 'cheerio';
 import request from 'superagent';
 import EventProxy from 'eventproxy';
 import AV from 'leancloud-storage';
-import {
-    APP_ID,
-    APP_KEY
-} from './config';
+import Jieba from 'nodejieba';
+// import {
+//     APP_ID,
+//     APP_KEY
+// } from './config';
+
+const APP_ID = 'DKznYjsoBovqVJ8fdTm3RwlB-gzGzoHsz';
+const APP_KEY = 'mTGcLoJJelK9SqLqfU5kSLi0';
 
 const url = 'https://www.lagou.com/jobs/113258.html';
 const url1 = 'https://www.lagou.com/jobs/list_前端开发?px=default&city=上海#filterBox';
@@ -59,14 +63,27 @@ function getJobs(entryList) {
     ep.after('got_jobs', entryList.length, function(list) {
         // 在所有文件的异步执行结束后将被执行
         // 所有文件的内容都存在list数组中
-        jobs.push(list);
-        var JobObject = AV.Object.extend('Job');
-        var jobObject = new JobObject();
-        jobObject.save({
-            page: list
-        }).then(function(object) {
-            console.log('save ok ✅');
-        })
+        // jobs.push(list);
+        // console.log(list);
+        let descConcat = '';
+        for (let i = 0; i < list.length; i++) {
+            descConcat = descConcat + list[i].title;
+        }
+        // descConcat = descConcat.replace(/([\u4e00-\u9fa5]|d+)/g, '').toLowerCase();
+        console.log(descConcat);
+        // console.log(Jieba.extract(descConcat, 100));
+        // const segment = new Segment();
+        // segment.useDefault();
+        //
+        // const result = segment.doSegment(JSON.stringify(list));
+        // console.log(JSON.stringify(result));
+        // var JobObject = AV.Object.extend('Job');
+        // var jobObject = new JobObject();
+        // jobObject.save({
+        //     page: list
+        // }).then(function(object) {
+        //     console.log('save ok ✅');
+        // })
 
         console.log(`第${pageIndex+1}页数据抓取完成，现在共${jobs.length}页数据`);
         setTimeout(() => {

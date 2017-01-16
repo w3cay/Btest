@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel index.js --watch --out-file index-compiled.js",
-    "test": "node index-compiled.js"
+    "start": "babel spider.js --watch --out-file spider-compiled.js",
+    "test": "node spider-compiled.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,9 @@
     "cheerio": "^0.22.0",
     "eventproxy": "^0.3.5",
     "leancloud-storage": "^1.5.3",
+    "nodejieba": "^2.2.4",
+    "rss-feed-emitter": "^1.0.6",
+    "segment": "^0.1.3",
     "superagent": "^3.1.0"
   }
 }
